@@ -21,12 +21,12 @@
 		AAE79E952135237A00E7AC1F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE79E942135237A00E7AC1F /* ViewController.swift */; };
 		AAE79E9A2135268800E7AC1F /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE79E982135268800E7AC1F /* PreviewView.swift */; };
 		AAE79E9B2135268800E7AC1F /* CameraFeedManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE79E992135268800E7AC1F /* CameraFeedManager.swift */; };
-		F0A0B641A9D84A33D025544E /* Pods_ImageClassification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E76B784C111DBC26EEEC02A /* Pods_ImageClassification.framework */; };
+		DF5B31DFA560E8C273234BF2 /* Pods_iosTensorflowLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1EB56D0A7EAB6F1FBF38AF0 /* Pods_iosTensorflowLite.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		14CAE291077E814D03E79CB3 /* Pods-ImageClassification.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageClassification.release.xcconfig"; path = "Target Support Files/Pods-ImageClassification/Pods-ImageClassification.release.xcconfig"; sourceTree = "<group>"; };
-		4E76B784C111DBC26EEEC02A /* Pods_ImageClassification.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImageClassification.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		14CAE291077E814D03E79CB3 /* Pods-iosTensorflowLite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosTensorflowLite.release.xcconfig"; path = "Target Support Files/Pods-iosTensorflowLite/Pods-iosTensorflowLite.release.xcconfig"; sourceTree = "<group>"; };
+		A1EB56D0A7EAB6F1FBF38AF0 /* Pods_iosTensorflowLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosTensorflowLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA16E5A12180843700D9E153 /* InfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoCell.swift; sourceTree = "<group>"; };
 		AA5B0EE9217E5E300026FF23 /* InferenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceViewController.swift; sourceTree = "<group>"; };
 		AA5B0EEB217E70000026FF23 /* CurvedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurvedView.swift; sourceTree = "<group>"; };
@@ -34,7 +34,7 @@
 		AA5FEB7C21355CCC00F9BD4B /* labels.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = labels.txt; sourceTree = "<group>"; };
 		AAAB096D218981FA0015A1F2 /* CVPixelBufferExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVPixelBufferExtension.swift; sourceTree = "<group>"; };
 		AABFCBB1213FE0B100C0A67B /* ModelDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelDataHandler.swift; sourceTree = "<group>"; };
-		AAE79E56213521DA00E7AC1F /* ImageClassification.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageClassification.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAE79E56213521DA00E7AC1F /* iosTensorflowLite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosTensorflowLite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAE79E59213521DA00E7AC1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AAE79E5E213521DA00E7AC1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AAE79E60213521DB00E7AC1F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -43,7 +43,7 @@
 		AAE79E942135237A00E7AC1F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		AAE79E982135268800E7AC1F /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		AAE79E992135268800E7AC1F /* CameraFeedManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraFeedManager.swift; sourceTree = "<group>"; };
-		E7F867EEDB032059F98AA497 /* Pods-ImageClassification.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageClassification.debug.xcconfig"; path = "Target Support Files/Pods-ImageClassification/Pods-ImageClassification.debug.xcconfig"; sourceTree = "<group>"; };
+		E7F867EEDB032059F98AA497 /* Pods-iosTensorflowLite.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosTensorflowLite.debug.xcconfig"; path = "Target Support Files/Pods-iosTensorflowLite/Pods-iosTensorflowLite.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0A0B641A9D84A33D025544E /* Pods_ImageClassification.framework in Frameworks */,
+				DF5B31DFA560E8C273234BF2 /* Pods_iosTensorflowLite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,7 +61,7 @@
 		44E4033AB526374BD9AFCCE0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4E76B784C111DBC26EEEC02A /* Pods_ImageClassification.framework */,
+				A1EB56D0A7EAB6F1FBF38AF0 /* Pods_iosTensorflowLite.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -69,8 +69,8 @@
 		8A2442349A519525D29B3656 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				E7F867EEDB032059F98AA497 /* Pods-ImageClassification.debug.xcconfig */,
-				14CAE291077E814D03E79CB3 /* Pods-ImageClassification.release.xcconfig */,
+				E7F867EEDB032059F98AA497 /* Pods-iosTensorflowLite.debug.xcconfig */,
+				14CAE291077E814D03E79CB3 /* Pods-iosTensorflowLite.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
@@ -129,7 +129,7 @@
 		AAE79E4D213521DA00E7AC1F = {
 			isa = PBXGroup;
 			children = (
-				AAE79E58213521DA00E7AC1F /* ImageClassification */,
+				AAE79E58213521DA00E7AC1F /* iosTensorflowLite */,
 				AAE79E57213521DA00E7AC1F /* Products */,
 				8A2442349A519525D29B3656 /* Pods */,
 				44E4033AB526374BD9AFCCE0 /* Frameworks */,
@@ -139,12 +139,12 @@
 		AAE79E57213521DA00E7AC1F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AAE79E56213521DA00E7AC1F /* ImageClassification.app */,
+				AAE79E56213521DA00E7AC1F /* iosTensorflowLite.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AAE79E58213521DA00E7AC1F /* ImageClassification */ = {
+		AAE79E58213521DA00E7AC1F /* iosTensorflowLite */ = {
 			isa = PBXGroup;
 			children = (
 				AAAB096C218981A30015A1F2 /* Extensions */,
@@ -159,7 +159,7 @@
 				AAE79E60213521DB00E7AC1F /* Assets.xcassets */,
 				AAE79E65213521DB00E7AC1F /* Info.plist */,
 			);
-			path = ImageClassification;
+			path = iosTensorflowLite;
 			sourceTree = "<group>";
 		};
 		AAE79E932135236700E7AC1F /* ViewControllers */ = {
@@ -183,9 +183,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AAE79E55213521DA00E7AC1F /* ImageClassification */ = {
+		AAE79E55213521DA00E7AC1F /* iosTensorflowLite */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AAE79E7E213521DB00E7AC1F /* Build configuration list for PBXNativeTarget "ImageClassification" */;
+			buildConfigurationList = AAE79E7E213521DB00E7AC1F /* Build configuration list for PBXNativeTarget "iosTensorflowLite" */;
 			buildPhases = (
 				0139AEC41FA0921D37A71365 /* [CP] Check Pods Manifest.lock */,
 				AA055D8B2162320A00B25948 /* ShellScript */,
@@ -197,9 +197,9 @@
 			);
 			dependencies = (
 			);
-			name = ImageClassification;
-			productName = ImageClassification;
-			productReference = AAE79E56213521DA00E7AC1F /* ImageClassification.app */;
+			name = iosTensorflowLite;
+			productName = iosTensorflowLite;
+			productReference = AAE79E56213521DA00E7AC1F /* iosTensorflowLite.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -218,7 +218,7 @@
 					};
 				};
 			};
-			buildConfigurationList = AAE79E51213521DA00E7AC1F /* Build configuration list for PBXProject "ImageClassification" */;
+			buildConfigurationList = AAE79E51213521DA00E7AC1F /* Build configuration list for PBXProject "iosTensorflowLite" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -231,7 +231,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AAE79E55213521DA00E7AC1F /* ImageClassification */,
+				AAE79E55213521DA00E7AC1F /* iosTensorflowLite */,
 			);
 		};
 /* End PBXProject section */
@@ -267,7 +267,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ImageClassification-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-iosTensorflowLite-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -450,7 +450,7 @@
 		};
 		AAE79E7F213521DB00E7AC1F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E7F867EEDB032059F98AA497 /* Pods-ImageClassification.debug.xcconfig */;
+			baseConfigurationReference = E7F867EEDB032059F98AA497 /* Pods-iosTensorflowLite.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -460,13 +460,13 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = ImageClassification/Info.plist;
+				INFOPLIST_FILE = iosTensorflowLite/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.tensorflow.ImageClassification;
+				PRODUCT_BUNDLE_IDENTIFIER = org.tensorflow.iosTensorflowLite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -477,7 +477,7 @@
 		};
 		AAE79E80213521DB00E7AC1F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 14CAE291077E814D03E79CB3 /* Pods-ImageClassification.release.xcconfig */;
+			baseConfigurationReference = 14CAE291077E814D03E79CB3 /* Pods-iosTensorflowLite.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -487,13 +487,13 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = ImageClassification/Info.plist;
+				INFOPLIST_FILE = iosTensorflowLite/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.tensorflow.ImageClassification;
+				PRODUCT_BUNDLE_IDENTIFIER = org.tensorflow.iosTensorflowLite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
@@ -504,7 +504,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AAE79E51213521DA00E7AC1F /* Build configuration list for PBXProject "ImageClassification" */ = {
+		AAE79E51213521DA00E7AC1F /* Build configuration list for PBXProject "iosTensorflowLite" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AAE79E7C213521DB00E7AC1F /* Debug */,
@@ -513,7 +513,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AAE79E7E213521DB00E7AC1F /* Build configuration list for PBXNativeTarget "ImageClassification" */ = {
+		AAE79E7E213521DB00E7AC1F /* Build configuration list for PBXNativeTarget "iosTensorflowLite" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AAE79E7F213521DB00E7AC1F /* Debug */,

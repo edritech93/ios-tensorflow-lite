@@ -17,7 +17,7 @@ We're now going to walk through the most important parts of the sample code.
 ### Get camera input
 
 The app's main view is represented by the `ViewController` class in
-[`ViewController.swift`](https://github.com/tensorflow/examples/tree/master/lite/examples/image_classification/ios/ImageClassification/ViewControllers/ViewController.swift),
+[`ViewController.swift`](https://github.com/tensorflow/examples/tree/master/lite/examples/image_classification/ios/iosTensorflowLite/ViewControllers/ViewController.swift),
 which we extend with functionality from the `CameraFeedManagerDelegate` protocol
 to process frames from a camera feed. To run inference on a given frame, we
 implement the `didOutput` method, which is called whenever a frame is available
@@ -52,7 +52,7 @@ extension ViewController: CameraFeedManagerDelegate {
 ### ModelDataHandler
 
 The Swift class `ModelDataHandler`, defined in
-[`ModelDataHandler.swift`](https://github.com/tensorflow/examples/tree/master/lite/examples/image_classification/ios/ImageClassification/ModelDataHandler/ModelDataHandler.swift),
+[`ModelDataHandler.swift`](https://github.com/tensorflow/examples/tree/master/lite/examples/image_classification/ios/iosTensorflowLite/ModelDataHandler/ModelDataHandler.swift),
 handles all data preprocessing and makes calls to run inference on a given frame
 using the TensorFlow Lite
 [`Interpreter`](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/swift/Sources/Interpreter.swift).
@@ -214,5 +214,5 @@ let topNInferences = sortedResults.map { result in Inference(confidence: result.
 ### Display results
 
 The file
-[`InferenceViewController.swift`](https://github.com/tensorflow/examples/tree/master/lite/examples/image_classification/ios/ImageClassification/ViewControllers/InferenceViewController.swift)
+[`InferenceViewController.swift`](https://github.com/tensorflow/examples/tree/master/lite/examples/image_classification/ios/iosTensorflowLite/ViewControllers/InferenceViewController.swift)
 defines the app's UI. A `UITableView` is used to display the results.
