@@ -34,8 +34,8 @@ typealias FileInfo = (name: String, extension: String)
 
 /// Information about the MobileNet model.
 enum MobileNet {
-  static let modelInfo: FileInfo = (name: "mobilenet_quant_v1_224", extension: "tflite")
-  static let labelsInfo: FileInfo = (name: "labels", extension: "txt")
+  static let modelInfo: FileInfo = (name: "mobile_face_net", extension: "tflite")
+  static let labelsInfo: FileInfo = (name: "labelmap", extension: "txt")
 }
 
 /// This class handles all data preprocessing and makes calls to run inference on a given frame
