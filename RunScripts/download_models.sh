@@ -46,7 +46,7 @@ download_and_extract() {
   rm -rf ${tempdir2} ${tempdir}
 }
 
-if [ -f ../iosTensorflowLite/Model/mobilenet_quant_v1_224.tflite ]
+if [ -f ../iosTensorflowLite/Model/mobile_face_net.tflite ]
 then
 echo "File exists. Exiting..."
 exit 0
