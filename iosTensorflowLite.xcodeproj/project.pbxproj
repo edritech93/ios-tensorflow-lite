@@ -10,7 +10,6 @@
 		087B3E02D77BCBBE187717F4 /* Pods_iosTensorflowLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417F38D076DB73A2FFD1C254 /* Pods_iosTensorflowLite.framework */; };
 		BB359E7E5A11E7F63DC7414C /* Pods_iosTensorflowLiteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 360D2168E06F35FB13C636CE /* Pods_iosTensorflowLiteTests.framework */; };
 		D4469F4526BBD9CF003FBB96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4469F4426BBD9CF003FBB96 /* AppDelegate.swift */; };
-		D4469F4926BBD9CF003FBB96 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4469F4826BBD9CF003FBB96 /* ViewController.swift */; };
 		D4469F4E26BBD9D1003FBB96 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4469F4D26BBD9D1003FBB96 /* Assets.xcassets */; };
 		D4469F5126BBD9D1003FBB96 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4469F4F26BBD9D1003FBB96 /* LaunchScreen.storyboard */; };
 		D4469F5C26BBD9D1003FBB96 /* iosTensorflowLiteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4469F5B26BBD9D1003FBB96 /* iosTensorflowLiteTests.swift */; };
@@ -19,7 +18,7 @@
 		D4469F7826BBDBF7003FBB96 /* MLKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4469F7526BBDBF7003FBB96 /* MLKitExtensions.swift */; };
 		D4469F7926BBDBF7003FBB96 /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4469F7626BBDBF7003FBB96 /* UIUtilities.swift */; };
 		D4469F7D26BBE7F8003FBB96 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4469F7C26BBE7F8003FBB96 /* Test.swift */; };
-		D4469F7F26BBE8DD003FBB96 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4469F7E26BBE8DD003FBB96 /* Camera.storyboard */; };
+		D4469F8526BBEFBC003FBB96 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4469F8326BBEFBC003FBB96 /* Camera.storyboard */; };
 		E7C9D80119D4D4E05580293B /* Pods_iosTensorflowLite_iosTensorflowLiteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5701D950D427BA31037F71 /* Pods_iosTensorflowLite_iosTensorflowLiteUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,7 +49,6 @@
 		AA4D507EA3B21231CC3CD954 /* Pods-iosTensorflowLite-iosTensorflowLiteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosTensorflowLite-iosTensorflowLiteUITests.debug.xcconfig"; path = "Target Support Files/Pods-iosTensorflowLite-iosTensorflowLiteUITests/Pods-iosTensorflowLite-iosTensorflowLiteUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		D4469F4126BBD9CF003FBB96 /* iosTensorflowLite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosTensorflowLite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4469F4426BBD9CF003FBB96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D4469F4826BBD9CF003FBB96 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D4469F4D26BBD9D1003FBB96 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4469F5026BBD9D1003FBB96 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D4469F5226BBD9D1003FBB96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -64,7 +62,7 @@
 		D4469F7526BBDBF7003FBB96 /* MLKitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MLKitExtensions.swift; sourceTree = "<group>"; };
 		D4469F7626BBDBF7003FBB96 /* UIUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
 		D4469F7C26BBE7F8003FBB96 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
-		D4469F7E26BBE8DD003FBB96 /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
+		D4469F8426BBEFBC003FBB96 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Camera.storyboard; sourceTree = "<group>"; };
 		EE48DE958FD57F3AD5E16067 /* Pods-iosTensorflowLite-iosTensorflowLiteUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosTensorflowLite-iosTensorflowLiteUITests.release.xcconfig"; path = "Target Support Files/Pods-iosTensorflowLite-iosTensorflowLiteUITests/Pods-iosTensorflowLite-iosTensorflowLiteUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F2788658B6D5725AC01C900C /* Pods-iosTensorflowLiteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosTensorflowLiteTests.release.xcconfig"; path = "Target Support Files/Pods-iosTensorflowLiteTests/Pods-iosTensorflowLiteTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -135,16 +133,15 @@
 		D4469F4326BBD9CF003FBB96 /* iosTensorflowLite */ = {
 			isa = PBXGroup;
 			children = (
+				D4469F8326BBEFBC003FBB96 /* Camera.storyboard */,
 				D4469F7426BBDBF7003FBB96 /* CameraViewController.swift */,
 				D4469F7526BBDBF7003FBB96 /* MLKitExtensions.swift */,
 				D4469F7626BBDBF7003FBB96 /* UIUtilities.swift */,
 				D4469F4426BBD9CF003FBB96 /* AppDelegate.swift */,
-				D4469F4826BBD9CF003FBB96 /* ViewController.swift */,
 				D4469F4D26BBD9D1003FBB96 /* Assets.xcassets */,
 				D4469F4F26BBD9D1003FBB96 /* LaunchScreen.storyboard */,
 				D4469F5226BBD9D1003FBB96 /* Info.plist */,
 				D4469F7C26BBE7F8003FBB96 /* Test.swift */,
-				D4469F7E26BBE8DD003FBB96 /* Camera.storyboard */,
 			);
 			path = iosTensorflowLite;
 			sourceTree = "<group>";
@@ -287,8 +284,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4469F7F26BBE8DD003FBB96 /* Camera.storyboard in Resources */,
 				D4469F5126BBD9D1003FBB96 /* LaunchScreen.storyboard in Resources */,
+				D4469F8526BBEFBC003FBB96 /* Camera.storyboard in Resources */,
 				D4469F4E26BBD9D1003FBB96 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -451,7 +448,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4469F4926BBD9CF003FBB96 /* ViewController.swift in Sources */,
 				D4469F7726BBDBF7003FBB96 /* CameraViewController.swift in Sources */,
 				D4469F4526BBD9CF003FBB96 /* AppDelegate.swift in Sources */,
 				D4469F7826BBDBF7003FBB96 /* MLKitExtensions.swift in Sources */,
@@ -498,6 +494,14 @@
 				D4469F5026BBD9D1003FBB96 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		D4469F8326BBEFBC003FBB96 /* Camera.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D4469F8426BBEFBC003FBB96 /* Base */,
+			);
+			name = Camera.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
