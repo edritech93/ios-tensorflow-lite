@@ -1,24 +1,96 @@
 PODS:
-  - TensorFlowLiteC (2.5.0):
-    - TensorFlowLiteC/Core (= 2.5.0)
-  - TensorFlowLiteC/Core (2.5.0)
-  - TensorFlowLiteSwift (2.5.0):
-    - TensorFlowLiteSwift/Core (= 2.5.0)
-  - TensorFlowLiteSwift/Core (2.5.0):
-    - TensorFlowLiteC (= 2.5.0)
+  - GoogleDataTransport (9.1.0):
+    - GoogleUtilities/Environment (~> 7.2)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleMLKit/FaceDetection (2.2.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitFaceDetection (~> 1.3.0)
+  - GoogleMLKit/MLKitCore (2.2.0):
+    - MLKitCommon (~> 3.0.0)
+  - GoogleToolboxForMac/DebugUtils (2.3.1):
+    - GoogleToolboxForMac/Defines (= 2.3.1)
+  - GoogleToolboxForMac/Defines (2.3.1)
+  - GoogleToolboxForMac/Logger (2.3.1):
+    - GoogleToolboxForMac/Defines (= 2.3.1)
+  - "GoogleToolboxForMac/NSData+zlib (2.3.1)":
+    - GoogleToolboxForMac/Defines (= 2.3.1)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.3.1)":
+    - GoogleToolboxForMac/DebugUtils (= 2.3.1)
+    - GoogleToolboxForMac/Defines (= 2.3.1)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.1)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.3.1)"
+  - GoogleUtilities/Environment (7.5.0):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.5.0):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/UserDefaults (7.5.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilitiesComponents (1.0.0):
+    - GoogleUtilities/Logger
+  - GTMSessionFetcher/Core (1.6.1)
+  - MLImage (1.0.0-beta1)
+  - MLKitCommon (3.0.0):
+    - GoogleDataTransport (~> 9.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - GoogleUtilities/UserDefaults (~> 7.0)
+    - GoogleUtilitiesComponents (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+    - Protobuf (~> 3.12)
+  - MLKitFaceDetection (1.3.0):
+    - MLKitCommon (~> 3.0)
+    - MLKitVision (~> 1.3)
+  - MLKitVision (1.3.0):
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - GTMSessionFetcher/Core (~> 1.1)
+    - MLImage (= 1.0.0-beta1)
+    - MLKitCommon (~> 3.0)
+    - Protobuf (~> 3.12)
+  - nanopb (2.30908.0):
+    - nanopb/decode (= 2.30908.0)
+    - nanopb/encode (= 2.30908.0)
+  - nanopb/decode (2.30908.0)
+  - nanopb/encode (2.30908.0)
+  - PromisesObjC (2.0.0)
+  - Protobuf (3.17.0)
 
 DEPENDENCIES:
-  - TensorFlowLiteSwift
+  - GoogleMLKit/FaceDetection
 
 SPEC REPOS:
   trunk:
-    - TensorFlowLiteC
-    - TensorFlowLiteSwift
+    - GoogleDataTransport
+    - GoogleMLKit
+    - GoogleToolboxForMac
+    - GoogleUtilities
+    - GoogleUtilitiesComponents
+    - GTMSessionFetcher
+    - MLImage
+    - MLKitCommon
+    - MLKitFaceDetection
+    - MLKitVision
+    - nanopb
+    - PromisesObjC
+    - Protobuf
 
 SPEC CHECKSUMS:
-  TensorFlowLiteC: 9115580176f050caa70fea478dba3d5a75c612a4
-  TensorFlowLiteSwift: 50063271b9ba99202c4d96a969a518eee2b5807e
+  GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
+  GoogleMLKit: 85ffdc9641d05311c76dbba5bbf93059087be12f
+  GoogleToolboxForMac: 471e0c05d39506e50e6398f46fa9a12ae0efeff9
+  GoogleUtilities: eea970f4a389963963bffe8d8fabe43540678b9c
+  GoogleUtilitiesComponents: a69c0b3b369ba443e988141e75ef49d9010b1c80
+  GTMSessionFetcher: 36689134877faeb055b27dfa4ccc9ceaa42e029e
+  MLImage: 647f3d580c10b3c9a3f6154f5d7baead60c42a0c
+  MLKitCommon: 6d6be0a2e9a6340aad1c1f2b9449c11dee8af70f
+  MLKitFaceDetection: 897f007aa4eb426ef1bac7c66e5451d02ffc2e83
+  MLKitVision: 26da299aef93291f24f5200e8372919f73abf3b5
+  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  Protobuf: 7327d4444215b5f18e560a97f879ff5503c4581c
 
-PODFILE CHECKSUM: a74909f04364b202256b357421541c79d27d19ee
+PODFILE CHECKSUM: ef60c18a3a40cac5c4001d51018ecfa46746cc18
 
 COCOAPODS: 1.10.1
