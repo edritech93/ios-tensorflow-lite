@@ -19,6 +19,9 @@
 		D4469F7926BBDBF7003FBB96 /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4469F7626BBDBF7003FBB96 /* UIUtilities.swift */; };
 		D4469F7D26BBE7F8003FBB96 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4469F7C26BBE7F8003FBB96 /* Test.swift */; };
 		D4469F8526BBEFBC003FBB96 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4469F8326BBEFBC003FBB96 /* Camera.storyboard */; };
+		D4CED59C26BCC906004F5A9D /* labelmap.txt in Resources */ = {isa = PBXBuildFile; fileRef = D4CED59A26BCC906004F5A9D /* labelmap.txt */; };
+		D4CED59D26BCC906004F5A9D /* mobile_face_net.tflite in Resources */ = {isa = PBXBuildFile; fileRef = D4CED59B26BCC906004F5A9D /* mobile_face_net.tflite */; };
+		D4CED59F26BCC94C004F5A9D /* ModelDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CED59E26BCC94C004F5A9D /* ModelDataHandler.swift */; };
 		E7C9D80119D4D4E05580293B /* Pods_iosTensorflowLite_iosTensorflowLiteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5701D950D427BA31037F71 /* Pods_iosTensorflowLite_iosTensorflowLiteUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +66,9 @@
 		D4469F7626BBDBF7003FBB96 /* UIUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
 		D4469F7C26BBE7F8003FBB96 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		D4469F8426BBEFBC003FBB96 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Camera.storyboard; sourceTree = "<group>"; };
+		D4CED59A26BCC906004F5A9D /* labelmap.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = labelmap.txt; sourceTree = "<group>"; };
+		D4CED59B26BCC906004F5A9D /* mobile_face_net.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = mobile_face_net.tflite; sourceTree = "<group>"; };
+		D4CED59E26BCC94C004F5A9D /* ModelDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelDataHandler.swift; sourceTree = "<group>"; };
 		EE48DE958FD57F3AD5E16067 /* Pods-iosTensorflowLite-iosTensorflowLiteUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosTensorflowLite-iosTensorflowLiteUITests.release.xcconfig"; path = "Target Support Files/Pods-iosTensorflowLite-iosTensorflowLiteUITests/Pods-iosTensorflowLite-iosTensorflowLiteUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F2788658B6D5725AC01C900C /* Pods-iosTensorflowLiteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosTensorflowLiteTests.release.xcconfig"; path = "Target Support Files/Pods-iosTensorflowLiteTests/Pods-iosTensorflowLiteTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,6 +139,8 @@
 		D4469F4326BBD9CF003FBB96 /* iosTensorflowLite */ = {
 			isa = PBXGroup;
 			children = (
+				D4CED59E26BCC94C004F5A9D /* ModelDataHandler.swift */,
+				D4CED59926BCC8CD004F5A9D /* model */,
 				D4469F8326BBEFBC003FBB96 /* Camera.storyboard */,
 				D4469F7426BBDBF7003FBB96 /* CameraViewController.swift */,
 				D4469F7526BBDBF7003FBB96 /* MLKitExtensions.swift */,
@@ -162,6 +170,15 @@
 				D4469F6826BBD9D1003FBB96 /* Info.plist */,
 			);
 			path = iosTensorflowLiteUITests;
+			sourceTree = "<group>";
+		};
+		D4CED59926BCC8CD004F5A9D /* model */ = {
+			isa = PBXGroup;
+			children = (
+				D4CED59A26BCC906004F5A9D /* labelmap.txt */,
+				D4CED59B26BCC906004F5A9D /* mobile_face_net.tflite */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 		F7D09A707602B3E3BDC134B7 /* Frameworks */ = {
@@ -284,8 +301,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4CED59C26BCC906004F5A9D /* labelmap.txt in Resources */,
 				D4469F5126BBD9D1003FBB96 /* LaunchScreen.storyboard in Resources */,
 				D4469F8526BBEFBC003FBB96 /* Camera.storyboard in Resources */,
+				D4CED59D26BCC906004F5A9D /* mobile_face_net.tflite in Resources */,
 				D4469F4E26BBD9D1003FBB96 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -450,6 +469,7 @@
 			files = (
 				D4469F7726BBDBF7003FBB96 /* CameraViewController.swift in Sources */,
 				D4469F4526BBD9CF003FBB96 /* AppDelegate.swift in Sources */,
+				D4CED59F26BCC94C004F5A9D /* ModelDataHandler.swift in Sources */,
 				D4469F7826BBDBF7003FBB96 /* MLKitExtensions.swift in Sources */,
 				D4469F7926BBDBF7003FBB96 /* UIUtilities.swift in Sources */,
 				D4469F7D26BBE7F8003FBB96 /* Test.swift in Sources */,
@@ -558,7 +578,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -613,7 +633,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

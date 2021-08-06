@@ -66,6 +66,7 @@ class CameraViewController: UIViewController {
     setUpAnnotationOverlayView()
     setUpCaptureSessionOutput()
     setUpCaptureSessionInput()
+    loadModelFaceNet()
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -97,6 +98,10 @@ class CameraViewController: UIViewController {
     removeDetectionAnnotations()
     setUpCaptureSessionInput()
   }
+    
+    private func loadModelFaceNet() {
+        
+    }
 
   private func detectFacesOnDevice(in image: VisionImage, width: CGFloat, height: CGFloat) {
     // When performing latency tests to determine ideal detection settings, run the app in 'release'
