@@ -148,21 +148,24 @@ class CameraViewController: UIViewController {
                 
                 let image: UIImage = getImageFromBuffer(from: imageBuffer)!
                 let imageCrop = getCropFace(image: image, rectImage: face.frame)
-//                let bgImage = UIImageView(image: imageCrop)
                 imageFace.image = imageCrop
                 
                 //TODO: waiting crop face
 //                let pixelBuffer : CVPixelBuffer = CMSampleBufferGetImageBuffer(imageBuffer)!
 //                result = modelDataHandler?.runModel(onFrame: pixelBuffer)
+                
+                if (imageCrop != nil)  {
+                    let recognizeResult = modelDataHandler?.recognize(image: imageCrop!, storeExtra: false)
+                }
             }
         }
     }
     
-    func getCropFace(image: UIImage, rectImage: CGRect) -> UIImage {
+    func getCropFace(image: UIImage, rectImage: CGRect) -> UIImage? {
         let contextImage: UIImage = UIImage(cgImage: image.cgImage!)
         let imageRef: CGImage = contextImage.cgImage!.cropping(to: rectImage)!
-        let image: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: .right)
-        return image
+        let imageCrop: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: .right)
+        return imageCrop
     }
     
     func getImageFromBuffer(from sampleBuffer: CMSampleBuffer?) -> UIImage? {

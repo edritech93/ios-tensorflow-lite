@@ -19,6 +19,8 @@
 		D4469F7926BBDBF7003FBB96 /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4469F7626BBDBF7003FBB96 /* UIUtilities.swift */; };
 		D4469F7D26BBE7F8003FBB96 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4469F7C26BBE7F8003FBB96 /* Test.swift */; };
 		D4469F8526BBEFBC003FBB96 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4469F8326BBEFBC003FBB96 /* Camera.storyboard */; };
+		D4A062F626BD1640007873C1 /* ModelFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A062F526BD1640007873C1 /* ModelFace.swift */; };
+		D4A062F826BD219D007873C1 /* Convert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A062F726BD219D007873C1 /* Convert.swift */; };
 		D4CED59C26BCC906004F5A9D /* labelmap.txt in Resources */ = {isa = PBXBuildFile; fileRef = D4CED59A26BCC906004F5A9D /* labelmap.txt */; };
 		D4CED59D26BCC906004F5A9D /* mobile_face_net.tflite in Resources */ = {isa = PBXBuildFile; fileRef = D4CED59B26BCC906004F5A9D /* mobile_face_net.tflite */; };
 		D4CED59F26BCC94C004F5A9D /* ModelDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CED59E26BCC94C004F5A9D /* ModelDataHandler.swift */; };
@@ -66,6 +68,8 @@
 		D4469F7626BBDBF7003FBB96 /* UIUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
 		D4469F7C26BBE7F8003FBB96 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		D4469F8426BBEFBC003FBB96 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Camera.storyboard; sourceTree = "<group>"; };
+		D4A062F526BD1640007873C1 /* ModelFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFace.swift; sourceTree = "<group>"; };
+		D4A062F726BD219D007873C1 /* Convert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Convert.swift; sourceTree = "<group>"; };
 		D4CED59A26BCC906004F5A9D /* labelmap.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = labelmap.txt; sourceTree = "<group>"; };
 		D4CED59B26BCC906004F5A9D /* mobile_face_net.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = mobile_face_net.tflite; sourceTree = "<group>"; };
 		D4CED59E26BCC94C004F5A9D /* ModelDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelDataHandler.swift; sourceTree = "<group>"; };
@@ -150,6 +154,8 @@
 				D4469F4F26BBD9D1003FBB96 /* LaunchScreen.storyboard */,
 				D4469F5226BBD9D1003FBB96 /* Info.plist */,
 				D4469F7C26BBE7F8003FBB96 /* Test.swift */,
+				D4A062F526BD1640007873C1 /* ModelFace.swift */,
+				D4A062F726BD219D007873C1 /* Convert.swift */,
 			);
 			path = iosTensorflowLite;
 			sourceTree = "<group>";
@@ -468,9 +474,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4469F7726BBDBF7003FBB96 /* CameraViewController.swift in Sources */,
+				D4A062F826BD219D007873C1 /* Convert.swift in Sources */,
 				D4469F4526BBD9CF003FBB96 /* AppDelegate.swift in Sources */,
 				D4CED59F26BCC94C004F5A9D /* ModelDataHandler.swift in Sources */,
 				D4469F7826BBDBF7003FBB96 /* MLKitExtensions.swift in Sources */,
+				D4A062F626BD1640007873C1 /* ModelFace.swift in Sources */,
 				D4469F7926BBDBF7003FBB96 /* UIUtilities.swift in Sources */,
 				D4469F7D26BBE7F8003FBB96 /* Test.swift in Sources */,
 			);
