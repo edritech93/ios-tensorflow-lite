@@ -51,6 +51,8 @@ class CameraViewController: UIViewController {
   /// queue. Useful for inferring when to reset detector instances which use a conventional
   /// lifecyle paradigm.
   private var lastDetector: Detector?
+  private var modelDataHandler: ModelDataHandler? =
+    ModelDataHandler(modelFileInfo: MobileNet.modelInfo, labelsFileInfo: MobileNet.labelsInfo)
 
   // MARK: - IBOutlets
 
@@ -60,6 +62,10 @@ class CameraViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    guard modelDataHandler != nil else {
+      fatalError("Model set up failed")
+    }
 
     previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
     setUpPreviewOverlayView()
@@ -122,7 +128,6 @@ class CameraViewController: UIViewController {
     }
     self.updatePreviewOverlayViewWithLastFrame()
     guard !faces.isEmpty else {
-      print("On-Device face detector returned no results.")
       return
     }
     weak var weakSelf = self
