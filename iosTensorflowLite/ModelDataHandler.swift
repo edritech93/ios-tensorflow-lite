@@ -44,8 +44,11 @@ class ModelDataHandler {
     
     let batchSize = 1
     let inputChannels = 3
-    let inputWidth = 224
-    let inputHeight = 224
+//    let inputWidth = 224
+//    let inputHeight = 224
+//    128
+        let inputWidth = 112
+        let inputHeight = 112
     
     // MARK: - Private Properties
     
@@ -101,21 +104,8 @@ class ModelDataHandler {
     }
     
     func tensorCamera(image: UIImage) {
-        let pixelBuffer = uiImageToPixelBuffer(image: image)
+        let pixelBuffer = uiImageToPixelBuffer(image: image, size: inputWidth)
         if (pixelBuffer != nil) {
-            let sourcePixelFormat = CVPixelBufferGetPixelFormatType(pixelBuffer!)
-            assert(sourcePixelFormat == kCVPixelFormatType_32ARGB ||
-                    sourcePixelFormat == kCVPixelFormatType_32BGRA ||
-                    sourcePixelFormat == kCVPixelFormatType_32RGBA)
-            
-            let imageChannels = 4
-            assert(imageChannels >= inputChannels)
-            
-            // Crops the image to the biggest square in the center and scales it down to model dimensions.
-            let scaledSize = CGSize(width: inputWidth, height: inputHeight)
-//            guard let thumbnailPixelBuffer = pixelBuffer.centerThumbnail(ofSize: scaledSize) else {
-//                return nil
-//            }
             let interval: TimeInterval
             let outputTensor: Tensor
             do {
@@ -130,19 +120,16 @@ class ModelDataHandler {
                     print("Failed to convert the image buffer to RGB data.")
                     return
                 }
-                
-                print(rgbData)
-                
-//                // Copy the RGB data to the input `Tensor`.
+                // Copy the RGB data to the input `Tensor`.
                 try interpreter.copy(rgbData, toInputAt: 0)
-//
-//                // Run inference by invoking the `Interpreter`.
-//                let startDate = Date()
-//                try interpreter.invoke()
-//                interval = Date().timeIntervalSince(startDate) * 1000
-//
-//                // Get the output `Tensor` to process the inference results.
-//                outputTensor = try interpreter.output(at: 0)
+
+                // Run inference by invoking the `Interpreter`.
+                let startDate = Date()
+                try interpreter.invoke()
+                interval = Date().timeIntervalSince(startDate) * 1000
+
+                // Get the output `Tensor` to process the inference results.
+                outputTensor = try interpreter.output(at: 0)
             } catch let error {
                 print("Failed to invoke the interpreter with error: \(error.localizedDescription)")
             }
