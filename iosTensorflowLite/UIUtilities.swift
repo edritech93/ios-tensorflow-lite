@@ -48,7 +48,8 @@ public class UIUtilities {
     let rectangleView = UIView(frame: rectangle)
     rectangleView.layer.cornerRadius = Constants.rectangleViewCornerRadius
     rectangleView.alpha = Constants.rectangleViewAlpha
-    rectangleView.backgroundColor = color
+    rectangleView.layer.borderWidth = 10
+    rectangleView.layer.borderColor = color.cgColor
     view.addSubview(rectangleView)
   }
 

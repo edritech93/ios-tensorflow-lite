@@ -113,9 +113,6 @@ class CameraViewController: UIViewController {
         // When performing latency tests to determine ideal detection settings, run the app in 'release'
         // mode to get accurate performance metrics.
         let options = FaceDetectorOptions()
-        options.landmarkMode = .none
-        options.contourMode = .all
-        options.classificationMode = .none
         options.performanceMode = .fast
         let faceDetector = FaceDetector.faceDetector(options: options)
         var faces: [Face]
