@@ -56,9 +56,9 @@ class CameraViewController: UIViewController {
     private var result: Result?
     
     // MARK: - IBOutlets
-    
     @IBOutlet private weak var cameraView: UIView!
-    @IBOutlet private weak var faceView: UIView!
+    @IBOutlet private weak var imageFace: UIImageView!
+    @IBOutlet private weak var imageStorage: UIImageView!
     
     // MARK: - UIViewController
     
@@ -148,8 +148,8 @@ class CameraViewController: UIViewController {
                 
                 let image: UIImage = getImageFromBuffer(from: imageBuffer)!
                 let imageCrop = getCropFace(image: image, rectImage: face.frame)
-                let bgImage = UIImageView(image: imageCrop)
-                faceView.addSubview(bgImage)
+//                let bgImage = UIImageView(image: imageCrop)
+                imageFace.image = imageCrop
                 
                 //TODO: waiting crop face
 //                let pixelBuffer : CVPixelBuffer = CMSampleBufferGetImageBuffer(imageBuffer)!
