@@ -53,6 +53,7 @@ class CameraViewController: UIViewController {
     private var lastDetector: Detector?
     private var modelDataHandler: ModelDataHandler? =
         ModelDataHandler(modelFileInfo: MobileNet.modelInfo, labelsFileInfo: MobileNet.labelsInfo)
+    private var result: Result?
     
     // MARK: - IBOutlets
     
@@ -73,7 +74,6 @@ class CameraViewController: UIViewController {
         setUpAnnotationOverlayView()
         setUpCaptureSessionOutput()
         setUpCaptureSessionInput()
-        loadModelFaceNet()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -103,10 +103,6 @@ class CameraViewController: UIViewController {
         isUsingFrontCamera = !isUsingFrontCamera
         removeDetectionAnnotations()
         setUpCaptureSessionInput()
-    }
-    
-    private func loadModelFaceNet() {
-        
     }
     
     private func detectFacesOnDevice(in image: VisionImage, width: CGFloat, height: CGFloat, imageBuffer: CMSampleBuffer) {
@@ -150,14 +146,23 @@ class CameraViewController: UIViewController {
                 )
                 strongSelf.addContours(for: face, width: width, height: height)
                 
-//                modelDataHandler?.runModel(onFrame: face)
-                
                 let image: UIImage = getImageFromBuffer(from: imageBuffer)!
-                let  bgImage = UIImageView(image: image)
-                bgImage.frame = face.frame
+                let imageCrop = getCropFace(image: image, rectImage: face.frame)
+                let bgImage = UIImageView(image: imageCrop)
                 faceView.addSubview(bgImage)
+                
+                //TODO: waiting crop face
+//                let pixelBuffer : CVPixelBuffer = CMSampleBufferGetImageBuffer(imageBuffer)!
+//                result = modelDataHandler?.runModel(onFrame: pixelBuffer)
             }
         }
+    }
+    
+    func getCropFace(image: UIImage, rectImage: CGRect) -> UIImage {
+        let contextImage: UIImage = UIImage(cgImage: image.cgImage!)
+        let imageRef: CGImage = contextImage.cgImage!.cropping(to: rectImage)!
+        let image: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: .right)
+        return image
     }
     
     func getImageFromBuffer(from sampleBuffer: CMSampleBuffer?) -> UIImage? {
