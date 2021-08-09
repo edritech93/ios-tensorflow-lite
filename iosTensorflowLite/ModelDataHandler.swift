@@ -4,6 +4,9 @@ import UIKit
 import Accelerate
 import AVFoundation
 import CoreMedia
+import CoreVideo
+import MLImage
+import MLKit
 
 /// A result from invoking the `Interpreter`.
 struct Result {
@@ -117,7 +120,12 @@ class ModelDataHandler {
     }
     
     func recognize(image: UIImage, storeExtra: Bool) -> [ModelFace] {
-        let outputTensor = tensorCamera(image: image)
+        var outputTensor: Tensor?
+        if (storeExtra) {
+            tensorStorage(imageString: getStorageSample())
+        } else {
+            outputTensor = tensorCamera(image: image)
+        }
         
         var distance: Float = 0.0
         let id = "0"
@@ -135,9 +143,9 @@ class ModelDataHandler {
         var arrayFace = [ModelFace]()
         let regLocation = CGRect(x: 0, y: 0, width: 200, height: 200)
         let modelFace: ModelFace = ModelFace(id: id, title: label, distance: distance, location: regLocation)
-        if (storeExtra) {
-            modelFace.setExtra(extra: outputTensor!);
-        }
+//        if (storeExtra) {
+//            modelFace.setExtra(extra: outputTensor!);
+//        }
         arrayFace.append(modelFace)
         return arrayFace
     }
@@ -172,6 +180,10 @@ class ModelDataHandler {
         } else {
             return nil
         }
+    }
+    
+    func tensorStorage(imageString: String) {
+       
     }
     
     /// Loads the labels from the labels file and stores them in the `labels` property.

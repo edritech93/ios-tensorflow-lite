@@ -147,6 +147,9 @@ class CameraViewController: UIViewController {
                 strongSelf.addContours(for: face, width: width, height: height)
             }
         }
+        if (isAddPending)   {
+            loadImageStorage();
+        }
         
         DispatchQueue.main.sync {
             for face in faces {
@@ -176,53 +179,42 @@ class CameraViewController: UIViewController {
                         if (extra != nil)  {
                             objFace.setExtra(extra: extra!)
                             modelDataHandler?.register(name: label, modelFace: objFace)
-                            isAddPending = false
                         }
+                        isAddPending = false
                     }
                 }
             }
         }
     }
     
-    func getImageFace(from sampleBuffer: CMSampleBuffer?, rectImage: CGRect) -> UIImage? {
-        guard let sampleBuffer = sampleBuffer else {
-            print("Sample buffer is NULL.")
-            return nil
+    func loadImageStorage() {
+        let imageData = Data.init(base64Encoded: getStorageSample(), options: .init(rawValue: 0))
+        if (imageData?.isEmpty != nil)   {
+            let image = UIImage(data: imageData!)
+            let options = FaceDetectorOptions()
+            options.performanceMode = .accurate
+            
+            let faceDetector = FaceDetector.faceDetector(options: options)
+            let visionImage = VisionImage(image: image!)
+            visionImage.orientation = image!.imageOrientation
+            
+            print("loadImageStorage")
+            faceDetector.process(visionImage) { faces, error in
+                guard error == nil, let faces = faces, !faces.isEmpty else {
+                    return
+                }
+                print("faces: \(faces.count)")
+                
+//                self.imageStorage!.image = image!
+                for face in faces {
+                    if (face.frame.isValid())  {
+                        let faceFrame = face.frame
+                        let imageCrop = getImageFaceFromUIImage(from: image!, rectImage: faceFrame)
+                        self.imageStorage!.image = imageCrop
+                    }
+                }
+            }
         }
-        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-            print("Invalid sample buffer.")
-            return nil
-        }
-        
-        CVPixelBufferLockBaseAddress(imageBuffer, CVPixelBufferLockFlags.readOnly)
-        
-        let baseAddress = CVPixelBufferGetBaseAddress(imageBuffer)
-        let bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer)
-        let bitPerComponent: size_t = 8 // TODO: This may vary on other formats.
-        let width = CVPixelBufferGetWidth(imageBuffer)
-        let height = CVPixelBufferGetHeight(imageBuffer)
-        
-        // TODO: Add more support for non-RGB color space.
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        
-        // TODO: Add more support for other formats.
-        guard let context = CGContext(data: baseAddress, width: width, height: height, bitsPerComponent: bitPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: CGBitmapInfo.byteOrder32Little.rawValue | CGImageAlphaInfo.premultipliedFirst.rawValue) else {
-            print("Failed to create CGContextRef")
-            CVPixelBufferUnlockBaseAddress(imageBuffer, .readOnly)
-            return nil
-        }
-        
-        guard let cgImage = context.makeImage() else {
-            print("Failed to create CGImage")
-            CVPixelBufferUnlockBaseAddress(imageBuffer, .readOnly)
-            return nil
-        }
-        
-        CVPixelBufferUnlockBaseAddress(imageBuffer, .readOnly)
-        
-        let imageRef: CGImage = cgImage.cropping(to: rectImage)!
-        let imageCrop: UIImage = UIImage(cgImage: imageRef, scale: 0.5, orientation: .right)
-        return imageCrop
     }
     
     // MARK: - Private
