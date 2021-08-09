@@ -8,18 +8,6 @@ import CoreVideo
 import MLImage
 import MLKit
 
-/// A result from invoking the `Interpreter`.
-struct Result {
-    let inferenceTime: Double
-    let inferences: [Inference]
-}
-
-/// An inference from invoking the `Interpreter`.
-struct Inference {
-    let confidence: Float
-    let label: String
-}
-
 /// Information about a model file or labels file.
 typealias FileInfo = (name: String, extension: String)
 
@@ -38,8 +26,6 @@ class ModelDataHandler {
     
     /// The current thread count used by the TensorFlow Lite Interpreter.
     let threadCount: Int
-    let resultCount = 3
-    let threadCountLimit = 10
     
     // MARK: - Model Parameters
     let batchSize = 1
@@ -54,10 +40,8 @@ class ModelDataHandler {
     
     /// TensorFlow Lite `Interpreter` object for performing inference on a given model.
     private var interpreter: Interpreter
-    
-    /// Information about the alpha component in RGBA data.
-    private let alphaComponent = (baseOffset: 4, moduloRemainder: 3)
     private var registered = [String : ModelFace]()
+    private var imageStorage: UIImage?
     
     // MARK: - Initialization
     
@@ -122,7 +106,7 @@ class ModelDataHandler {
     func recognize(image: UIImage, storeExtra: Bool) -> [ModelFace] {
         var outputTensor: Tensor?
         if (storeExtra) {
-            tensorStorage(imageString: getStorageSample())
+            outputTensor = tensorCamera(image: imageStorage!)
         } else {
             outputTensor = tensorCamera(image: image)
         }
@@ -143,9 +127,9 @@ class ModelDataHandler {
         var arrayFace = [ModelFace]()
         let regLocation = CGRect(x: 0, y: 0, width: 200, height: 200)
         let modelFace: ModelFace = ModelFace(id: id, title: label, distance: distance, location: regLocation)
-//        if (storeExtra) {
-//            modelFace.setExtra(extra: outputTensor!);
-//        }
+        if (storeExtra) {
+            modelFace.setExtra(extra: outputTensor!);
+        }
         arrayFace.append(modelFace)
         return arrayFace
     }
@@ -182,8 +166,8 @@ class ModelDataHandler {
         }
     }
     
-    func tensorStorage(imageString: String) {
-       
+    func setImageStorage(imageStorage: UIImage) {
+        self.imageStorage = imageStorage
     }
     
     /// Loads the labels from the labels file and stores them in the `labels` property.

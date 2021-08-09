@@ -54,8 +54,8 @@ class CameraViewController: UIViewController {
     private var lastDetector: Detector?
     private var modelDataHandler: ModelDataHandler? =
         ModelDataHandler(modelFileInfo: MobileNet.modelInfo, labelsFileInfo: MobileNet.labelsInfo)
-    private var result: Result?
     private var isAddPending = true
+    private var isLoadStorage = true
     private var colorFrame: UIColor = UIColor.red
     private var labelFrame: String = ""
     
@@ -76,6 +76,9 @@ class CameraViewController: UIViewController {
         setUpAnnotationOverlayView()
         setUpCaptureSessionOutput()
         setUpCaptureSessionInput()
+        if (isLoadStorage)   {
+            loadImageStorage();
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -147,13 +150,10 @@ class CameraViewController: UIViewController {
                 strongSelf.addContours(for: face, width: width, height: height)
             }
         }
-        if (isAddPending)   {
-            loadImageStorage();
-        }
         
         DispatchQueue.main.sync {
             for face in faces {
-                if (face.frame.isValid())  {
+                if (face.frame.isValid() && isLoadStorage == false)  {
                     let faceFrame = face.frame
                     let imageCrop = getImageFace(from: imageBuffer, rectImage: faceFrame)
                     imageFace.image = imageCrop
@@ -198,19 +198,17 @@ class CameraViewController: UIViewController {
             let visionImage = VisionImage(image: image!)
             visionImage.orientation = image!.imageOrientation
             
-            print("loadImageStorage")
             faceDetector.process(visionImage) { faces, error in
                 guard error == nil, let faces = faces, !faces.isEmpty else {
                     return
                 }
-                print("faces: \(faces.count)")
-                
-//                self.imageStorage!.image = image!
                 for face in faces {
                     if (face.frame.isValid())  {
                         let faceFrame = face.frame
                         let imageCrop = getImageFaceFromUIImage(from: image!, rectImage: faceFrame)
                         self.imageStorage!.image = imageCrop
+                        self.modelDataHandler?.setImageStorage(imageStorage: imageCrop!)
+                        self.isLoadStorage = false
                     }
                 }
             }
