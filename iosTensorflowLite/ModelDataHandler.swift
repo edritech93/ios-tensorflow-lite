@@ -147,11 +147,9 @@ class ModelDataHandler {
     func tensorCamera(image: UIImage) -> Tensor? {
         let pixelBuffer = uiImageToPixelBuffer(image: image, size: inputWidth)
         if (pixelBuffer != nil) {
-            let interval: TimeInterval
             let outputTensor: Tensor
             do {
                 let inputTensor = try interpreter.input(at: 0)
-                
                 // Remove the alpha component from the image buffer to get the RGB data.
                 guard let rgbData = rgbDataFromBuffer(
                     pixelBuffer!,
@@ -165,10 +163,7 @@ class ModelDataHandler {
                 try interpreter.copy(rgbData, toInputAt: 0)
                 
                 // Run inference by invoking the `Interpreter`.
-                let startDate = Date()
                 try interpreter.invoke()
-                interval = Date().timeIntervalSince(startDate) * 1000
-                
                 // Get the output `Tensor` to process the inference results.
                 outputTensor = try interpreter.output(at: 0)
                 return outputTensor

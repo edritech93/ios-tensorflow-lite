@@ -107,6 +107,9 @@ class CameraViewController: UIViewController {
         setUpCaptureSessionInput()
     }
     
+    private var colorFrame: UIColor = UIColor.red
+    private var labelFrame: String = ""
+    
     private func detectFacesOnDevice(in image: VisionImage, width: CGFloat, height: CGFloat, imageBuffer: CMSampleBuffer) {
         // When performing latency tests to determine ideal detection settings, run the app in 'release'
         // mode to get accurate performance metrics.
@@ -131,7 +134,6 @@ class CameraViewController: UIViewController {
                 print("Self is nil!")
                 return
             }
-            var arrayFace = [ModelFace]()
             for face in faces {
                 let normalizedRect = CGRect(
                     x: face.frame.origin.x / width,
@@ -142,59 +144,58 @@ class CameraViewController: UIViewController {
                 let standardizedRect = strongSelf.previewLayer.layerRectConverted(
                     fromMetadataOutputRect: normalizedRect
                 ).standardized
-
+                UIUtilities.addRectangle(
+                    standardizedRect,
+                    to: strongSelf.annotationOverlayView,
+                    color: colorFrame,
+                    label: labelFrame
+                )
                 strongSelf.addContours(for: face, width: width, height: height)
-                var faceFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
-                if (!face.frame.isNull)  {
-                    faceFrame = face.frame
-                }
-                let image: UIImage = getImageFromBuffer(from: imageBuffer)!
-                let imageCrop = getCropFace(image: image, rectImage: faceFrame)
-                //                imageFace.image = imageCrop
-                
-                if (imageCrop != nil)  {
-                    var confidence: Float = 3.0
-                    var color: UIColor = UIColor.red
-                    var label: String = "Unknown"
-                    let resultUser = modelDataHandler?.recognize(image: imageCrop!, storeExtra: isAddPending)
-                    let result: ModelFace = (resultUser![0])
-                    let extra = result.getExtra() ?? nil
-                    confidence = result.getDistance()!
-                    print("confidence: \(confidence)")
-                    if (confidence < 1.0)   {
-                        color = UIColor.green
-                        label = "User"
+            }
+        }
+        
+        DispatchQueue.main.sync {
+            for face in faces {
+                if (face.frame.isValid())  {
+                    let faceFrame = face.frame
+                    let image: UIImage? = getImageFromBuffer(from: imageBuffer)!
+                    if (image != nil)   {
+                        let imageCrop = getCropFace(image: image!, rectImage: faceFrame)
+                        imageFace.image = imageCrop
+
+                        if (imageCrop != nil)  {
+                            var confidence: Float = 3.0
+                            var color: UIColor = UIColor.red
+                            var label: String = "Unknown"
+                            let resultUser = modelDataHandler?.recognize(image: imageCrop!, storeExtra: isAddPending)
+                            let result: ModelFace = (resultUser![0])
+                            let extra = result.getExtra() ?? nil
+                            confidence = result.getDistance()!
+                            if (confidence < 1.0)   {
+                                color = UIColor.green
+                                label = "User"
+                            }
+                            colorFrame = color
+                            let confidenceStr = String(format: "%.2f", confidence)
+                            labelFrame = label + " \(confidenceStr)"
+
+                            let objFace = ModelFace(id: "0", title: label, distance: confidence, location: faceFrame)
+                            objFace.setColor(color: color)
+                            if (extra != nil)  {
+                                objFace.setExtra(extra: extra!)
+                                modelDataHandler?.register(name: label, modelFace: objFace)
+                                isAddPending = false
+                            }
+                        }
                     }
-                    UIUtilities.addRectangle(
-                        standardizedRect,
-                        to: strongSelf.annotationOverlayView,
-                        color: color
-                    )
-                    
-                    let objFace = ModelFace(id: "0", title: label, distance: confidence, location: faceFrame)
-                    objFace.setColor(color: color)
-                    if (extra != nil)  {
-                        objFace.setExtra(extra: extra!)
-                    }
-                    arrayFace.append(objFace)
                 }
             }
-            updateResult(arrayFace: arrayFace)
         }
-    }
-    
-    func updateResult(arrayFace: [ModelFace]) {
-        let name = arrayFace[0].getTitle()
-        let extra = arrayFace[0].getExtra()
-        if (extra != nil)   {
-            modelDataHandler?.register(name: name!, modelFace: arrayFace[0])
-        }
-        isAddPending = false
     }
     
     func getCropFace(image: UIImage, rectImage: CGRect) -> UIImage? {
-        let contextImage: UIImage = UIImage(cgImage: image.cgImage!)
-        if (!rectImage.isNull)   {
+        if (image.cgImage != nil)   {
+            let contextImage: UIImage = UIImage(cgImage: image.cgImage!)
             let imageRef: CGImage = contextImage.cgImage!.cropping(to: rectImage)!
             let imageCrop: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: .right)
             return imageCrop
