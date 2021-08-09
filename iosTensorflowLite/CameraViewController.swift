@@ -56,6 +56,8 @@ class CameraViewController: UIViewController {
         ModelDataHandler(modelFileInfo: MobileNet.modelInfo, labelsFileInfo: MobileNet.labelsInfo)
     private var result: Result?
     private var isAddPending = true
+    private var colorFrame: UIColor = UIColor.red
+    private var labelFrame: String = ""
     
     // MARK: - IBOutlets
     @IBOutlet private weak var cameraView: UIView!
@@ -66,11 +68,9 @@ class CameraViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         guard modelDataHandler != nil else {
             fatalError("Model set up failed")
         }
-        
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         setUpPreviewOverlayView()
         setUpAnnotationOverlayView()
@@ -80,19 +80,16 @@ class CameraViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         startSession()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
         stopSession()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         previewLayer.frame = cameraView.frame
     }
     
@@ -106,9 +103,6 @@ class CameraViewController: UIViewController {
         removeDetectionAnnotations()
         setUpCaptureSessionInput()
     }
-    
-    private var colorFrame: UIColor = UIColor.red
-    private var labelFrame: String = ""
     
     private func detectFacesOnDevice(in image: VisionImage, width: CGFloat, height: CGFloat, imageBuffer: CMSampleBuffer) {
         // When performing latency tests to determine ideal detection settings, run the app in 'release'
@@ -158,34 +152,31 @@ class CameraViewController: UIViewController {
             for face in faces {
                 if (face.frame.isValid())  {
                     let faceFrame = face.frame
-                    let image: UIImage? = getImageFromBuffer(from: imageBuffer)!
-                    if (image != nil)   {
-                        let imageCrop = getCropFace(image: image!, rectImage: faceFrame)
-                        imageFace.image = imageCrop
-
-                        if (imageCrop != nil)  {
-                            var confidence: Float = 3.0
-                            var color: UIColor = UIColor.red
-                            var label: String = "Unknown"
-                            let resultUser = modelDataHandler?.recognize(image: imageCrop!, storeExtra: isAddPending)
-                            let result: ModelFace = (resultUser![0])
-                            let extra = result.getExtra() ?? nil
-                            confidence = result.getDistance()!
-                            if (confidence < 1.0)   {
-                                color = UIColor.green
-                                label = "User"
-                            }
-                            colorFrame = color
-                            let confidenceStr = String(format: "%.2f", confidence)
-                            labelFrame = label + " \(confidenceStr)"
-
-                            let objFace = ModelFace(id: "0", title: label, distance: confidence, location: faceFrame)
-                            objFace.setColor(color: color)
-                            if (extra != nil)  {
-                                objFace.setExtra(extra: extra!)
-                                modelDataHandler?.register(name: label, modelFace: objFace)
-                                isAddPending = false
-                            }
+                    let imageCrop = getImageFace(from: imageBuffer, rectImage: faceFrame)
+                    imageFace.image = imageCrop
+                    
+                    if (imageCrop != nil)  {
+                        var confidence: Float = 3.0
+                        var color: UIColor = UIColor.red
+                        var label: String = "Unknown"
+                        let resultUser = modelDataHandler?.recognize(image: imageCrop!, storeExtra: isAddPending)
+                        let result: ModelFace = (resultUser![0])
+                        let extra = result.getExtra() ?? nil
+                        confidence = result.getDistance()!
+                        if (confidence < 1.0)   {
+                            color = UIColor.green
+                            label = "User"
+                        }
+                        colorFrame = color
+                        let confidenceStr = String(format: "%.2f", confidence)
+                        labelFrame = label + " \(confidenceStr)"
+                        
+                        let objFace = ModelFace(id: "0", title: label, distance: confidence, location: faceFrame)
+                        objFace.setColor(color: color)
+                        if (extra != nil)  {
+                            objFace.setExtra(extra: extra!)
+                            modelDataHandler?.register(name: label, modelFace: objFace)
+                            isAddPending = false
                         }
                     }
                 }
@@ -193,18 +184,7 @@ class CameraViewController: UIViewController {
         }
     }
     
-    func getCropFace(image: UIImage, rectImage: CGRect) -> UIImage? {
-        if (image.cgImage != nil)   {
-            let contextImage: UIImage = UIImage(cgImage: image.cgImage!)
-            let imageRef: CGImage = contextImage.cgImage!.cropping(to: rectImage)!
-            let imageCrop: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: .right)
-            return imageCrop
-        } else {
-            return nil
-        }
-    }
-    
-    func getImageFromBuffer(from sampleBuffer: CMSampleBuffer?) -> UIImage? {
+    func getImageFace(from sampleBuffer: CMSampleBuffer?, rectImage: CGRect) -> UIImage? {
         guard let sampleBuffer = sampleBuffer else {
             print("Sample buffer is NULL.")
             return nil
@@ -240,12 +220,12 @@ class CameraViewController: UIViewController {
         
         CVPixelBufferUnlockBaseAddress(imageBuffer, .readOnly)
         
-        let image = UIImage(cgImage: cgImage)
-        return image
+        let imageRef: CGImage = cgImage.cropping(to: rectImage)!
+        let imageCrop: UIImage = UIImage(cgImage: imageRef, scale: 0.5, orientation: .right)
+        return imageCrop
     }
     
     // MARK: - Private
-    
     private func setUpCaptureSessionOutput() {
         weak var weakSelf = self
         sessionQueue.async {
