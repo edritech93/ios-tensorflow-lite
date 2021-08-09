@@ -35,12 +35,10 @@ class ModelDataHandler {
     
     /// The current thread count used by the TensorFlow Lite Interpreter.
     let threadCount: Int
-    
     let resultCount = 3
     let threadCountLimit = 10
     
     // MARK: - Model Parameters
-    
     let batchSize = 1
     let inputChannels = 3
     let inputWidth = 112
@@ -174,95 +172,6 @@ class ModelDataHandler {
         } else {
             return nil
         }
-    }
-    
-    // MARK: - Internal Methods
-    /// Performs image preprocessing, invokes the `Interpreter`, and processes the inference results.
-    func runModel(onFrame pixelBuffer: CVPixelBuffer) -> Result? {
-        
-        let sourcePixelFormat = CVPixelBufferGetPixelFormatType(pixelBuffer)
-        assert(sourcePixelFormat == kCVPixelFormatType_32ARGB ||
-                sourcePixelFormat == kCVPixelFormatType_32BGRA ||
-                sourcePixelFormat == kCVPixelFormatType_32RGBA)
-        
-        
-        let imageChannels = 4
-        assert(imageChannels >= inputChannels)
-        
-        // Crops the image to the biggest square in the center and scales it down to model dimensions.
-        let scaledSize = CGSize(width: inputWidth, height: inputHeight)
-        //    guard let thumbnailPixelBuffer = pixelBuffer.centerThumbnail(ofSize: scaledSize) else {
-        //      return nil
-        //    }
-        //    guard let thumbnailPixelBuffer = pixelBuffer else { return nil }
-        //    guard let thumbnailPixelBuffer : CVPixelBuffer = pixelBuffer.imageBuffer else { return nil }
-        let interval: TimeInterval
-        let outputTensor: Tensor
-        do {
-            let inputTensor = try interpreter.input(at: 0)
-            
-            // Remove the alpha component from the image buffer to get the RGB data.
-            guard let rgbData = rgbDataFromBuffer(
-                pixelBuffer,
-                byteCount: batchSize * inputWidth * inputHeight * inputChannels,
-                isModelQuantized: inputTensor.dataType == .uInt8
-            ) else {
-                print("Failed to convert the image buffer to RGB data.")
-                return nil
-            }
-            
-            // Copy the RGB data to the input `Tensor`.
-            try interpreter.copy(rgbData, toInputAt: 0)
-            
-            // Run inference by invoking the `Interpreter`.
-            let startDate = Date()
-            try interpreter.invoke()
-            interval = Date().timeIntervalSince(startDate) * 1000
-            
-            // Get the output `Tensor` to process the inference results.
-            outputTensor = try interpreter.output(at: 0)
-        } catch let error {
-            print("Failed to invoke the interpreter with error: \(error.localizedDescription)")
-            return nil
-        }
-        
-        let results: [Float]
-        switch outputTensor.dataType {
-        case .uInt8:
-            guard let quantization = outputTensor.quantizationParameters else {
-                print("No results returned because the quantization values for the output tensor are nil.")
-                return nil
-            }
-            let quantizedResults = [UInt8](outputTensor.data)
-            results = quantizedResults.map {
-                quantization.scale * Float(Int($0) - quantization.zeroPoint)
-            }
-        case .float32:
-            results = [Float32](unsafeData: outputTensor.data) ?? []
-        default:
-            print("Output tensor data type \(outputTensor.dataType) is unsupported for this example app.")
-            return nil
-        }
-        
-        // Process the results.
-        let topNInferences = getTopN(results: results)
-        
-        // Return the inference time and inference results.
-        return Result(inferenceTime: interval, inferences: topNInferences)
-    }
-    
-    // MARK: - Private Methods
-    
-    /// Returns the top N inference results sorted in descending order.
-    private func getTopN(results: [Float]) -> [Inference] {
-        // Create a zipped array of tuples [(labelIndex: Int, confidence: Float)].
-        let zippedResults = zip(labels.indices, results)
-        
-        // Sort the zipped results by confidence value in descending order.
-        let sortedResults = zippedResults.sorted { $0.1 > $1.1 }.prefix(resultCount)
-        
-        // Return the `Inference` results.
-        return sortedResults.map { result in Inference(confidence: result.1, label: labels[result.0]) }
     }
     
     /// Loads the labels from the labels file and stores them in the `labels` property.
