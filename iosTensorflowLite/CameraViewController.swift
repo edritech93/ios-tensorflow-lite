@@ -142,11 +142,7 @@ class CameraViewController: UIViewController {
                 let standardizedRect = strongSelf.previewLayer.layerRectConverted(
                     fromMetadataOutputRect: normalizedRect
                 ).standardized
-                UIUtilities.addRectangle(
-                    standardizedRect,
-                    to: strongSelf.annotationOverlayView,
-                    color: UIColor.green
-                )
+
                 strongSelf.addContours(for: face, width: width, height: height)
                 var faceFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
                 if (!face.frame.isNull)  {
@@ -164,11 +160,17 @@ class CameraViewController: UIViewController {
                     let result: ModelFace = (resultUser![0])
                     let extra = result.getExtra() ?? nil
                     confidence = result.getDistance()!
-                    //                    print("confidence: \(confidence)")
-                    if (confidence < 0.9)   {
+                    print("confidence: \(confidence)")
+                    if (confidence < 1.0)   {
                         color = UIColor.green
                         label = "User"
                     }
+                    UIUtilities.addRectangle(
+                        standardizedRect,
+                        to: strongSelf.annotationOverlayView,
+                        color: color
+                    )
+                    
                     let objFace = ModelFace(id: "0", title: label, distance: confidence, location: faceFrame)
                     objFace.setColor(color: color)
                     if (extra != nil)  {

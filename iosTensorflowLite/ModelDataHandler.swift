@@ -95,41 +95,27 @@ class ModelDataHandler {
         registered[name] = modelFace
     }
     
-    func findNearest(emb: Tensor) {
+    func findNearest(emb: Tensor) -> [String : Float] {
+        var ret = [String : Float]()
+        var distance: Float = 0.0;
+        var name: String = ""
         for itemRegistered in registered {
-            let name = itemRegistered.key
+            name = itemRegistered.key
             let knownEmb = itemRegistered.value.getExtra()
             
             let newKnownEmb: Tensor = knownEmb!
             let resultsKnown: [Float] = [Float32](unsafeData: newKnownEmb.data) ?? []
             let resultsEmb: [Float] = [Float32](unsafeData: emb.data) ?? []
             
-            var distance: Float = 0.0;
             for i in 1...resultsEmb.count {
                 let index = i - 1
                 let diff: Float = resultsEmb[index] - resultsKnown[index]
                 let diffCalc = diff * diff
                 distance = distance + diffCalc
             }
-            print("distance: \(distance)")
         }
-        
-        //        Pair<String, Float> ret = null;
-        //               for (Map.Entry<String, ModelFace> entry : registered.entrySet()) {
-        //                   final String name = entry.getKey();
-        //                   final float[] knownEmb = ((float[][]) entry.getValue().getExtra())[0];
-        //
-        //                   float distance = 0;
-        //                   for (int i = 0; i < emb.length; i++) {
-        //                       float diff = emb[i] - knownEmb[i];
-        //                       distance += diff * diff;
-        //                   }
-        //                   distance = (float) Math.sqrt(distance);
-        //                   if (ret == null || distance < ret.second) {
-        //                       ret = new Pair<>(name, distance);
-        //                   }
-        //               }
-        //               return ret;
+        ret[name] = distance
+        return ret
     }
     
     func recognize(image: UIImage, storeExtra: Bool) -> [ModelFace] {
@@ -140,13 +126,14 @@ class ModelDataHandler {
         var label = "?"
         
         if (registered.count > 0)   {
-            let nearest = findNearest(emb: outputTensor!)
-            if (nearest != nil) {
-                //                label = nearest.label
-                //                distance = nearest.distance
+            let nearest: [String : Float] = findNearest(emb: outputTensor!)
+            if (!nearest.isEmpty) {
+                for item in nearest {
+                    label = item.key
+                    distance = item.value
+                }
             }
         }
-        
         var arrayFace = [ModelFace]()
         let regLocation = CGRect(x: 0, y: 0, width: 200, height: 200)
         let modelFace: ModelFace = ModelFace(id: id, title: label, distance: distance, location: regLocation)
