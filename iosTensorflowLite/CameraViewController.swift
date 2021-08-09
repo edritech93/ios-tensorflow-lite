@@ -2,6 +2,7 @@ import AVFoundation
 import CoreVideo
 import MLImage
 import MLKit
+import TensorFlowLite
 
 @objc(CameraViewController)
 class CameraViewController: UIViewController {
@@ -54,6 +55,7 @@ class CameraViewController: UIViewController {
     private var modelDataHandler: ModelDataHandler? =
         ModelDataHandler(modelFileInfo: MobileNet.modelInfo, labelsFileInfo: MobileNet.labelsInfo)
     private var result: Result?
+    private var isAddPending = true
     
     // MARK: - IBOutlets
     @IBOutlet private weak var cameraView: UIView!
@@ -129,6 +131,7 @@ class CameraViewController: UIViewController {
                 print("Self is nil!")
                 return
             }
+            var arrayFace = [ModelFace]()
             for face in faces {
                 let normalizedRect = CGRect(
                     x: face.frame.origin.x / width,
@@ -145,27 +148,57 @@ class CameraViewController: UIViewController {
                     color: UIColor.green
                 )
                 strongSelf.addContours(for: face, width: width, height: height)
-                
+                var faceFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
+                if (!face.frame.isNull)  {
+                    faceFrame = face.frame
+                }
                 let image: UIImage = getImageFromBuffer(from: imageBuffer)!
-                let imageCrop = getCropFace(image: image, rectImage: face.frame)
-                imageFace.image = imageCrop
-                
-                //TODO: waiting crop face
-//                let pixelBuffer : CVPixelBuffer = CMSampleBufferGetImageBuffer(imageBuffer)!
-//                result = modelDataHandler?.runModel(onFrame: pixelBuffer)
+                let imageCrop = getCropFace(image: image, rectImage: faceFrame)
+                //                imageFace.image = imageCrop
                 
                 if (imageCrop != nil)  {
-                    let recognizeResult = modelDataHandler?.recognize(image: imageCrop!, storeExtra: false)
+                    var confidence: Float = 3.0
+                    var color: UIColor = UIColor.red
+                    var label: String = "Unknown"
+                    let resultUser = modelDataHandler?.recognize(image: imageCrop!, storeExtra: isAddPending)
+                    let result: ModelFace = (resultUser![0])
+                    let extra = result.getExtra() ?? nil
+                    confidence = result.getDistance()!
+                    //                    print("confidence: \(confidence)")
+                    if (confidence < 0.9)   {
+                        color = UIColor.green
+                        label = "User"
+                    }
+                    let objFace = ModelFace(id: "0", title: label, distance: confidence, location: faceFrame)
+                    objFace.setColor(color: color)
+                    if (extra != nil)  {
+                        objFace.setExtra(extra: extra!)
+                    }
+                    arrayFace.append(objFace)
                 }
             }
+            updateResult(arrayFace: arrayFace)
         }
+    }
+    
+    func updateResult(arrayFace: [ModelFace]) {
+        let name = arrayFace[0].getTitle()
+        let extra = arrayFace[0].getExtra()
+        if (extra != nil)   {
+            modelDataHandler?.register(name: name!, modelFace: arrayFace[0])
+        }
+        isAddPending = false
     }
     
     func getCropFace(image: UIImage, rectImage: CGRect) -> UIImage? {
         let contextImage: UIImage = UIImage(cgImage: image.cgImage!)
-        let imageRef: CGImage = contextImage.cgImage!.cropping(to: rectImage)!
-        let imageCrop: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: .right)
-        return imageCrop
+        if (!rectImage.isNull)   {
+            let imageRef: CGImage = contextImage.cgImage!.cropping(to: rectImage)!
+            let imageCrop: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: .right)
+            return imageCrop
+        } else {
+            return nil
+        }
     }
     
     func getImageFromBuffer(from sampleBuffer: CMSampleBuffer?) -> UIImage? {

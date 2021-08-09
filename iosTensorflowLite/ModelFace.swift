@@ -7,12 +7,13 @@
 
 import Foundation
 import UIKit
+import TensorFlowLite
 
 class ModelFace {
     var id: String?
     var title: String?
     var distance: Float?
-    var extra: NSObject?
+    var extra: Tensor?
     var location: CGRect?
     var color: UIColor?
     var crop: UIImage?
@@ -36,7 +37,7 @@ class ModelFace {
         self.distance = distance
     }
     
-    func setExtra(extra: NSObject) {
+    func setExtra(extra: Tensor) {
         self.extra = extra
     }
     
@@ -64,7 +65,7 @@ class ModelFace {
         return self.distance
     }
     
-    func getExtra() -> NSObject? {
+    func getExtra() -> Tensor? {
         return self.extra
     }
     

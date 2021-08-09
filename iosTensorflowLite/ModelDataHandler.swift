@@ -2,7 +2,6 @@ import CoreImage
 import TensorFlowLite
 import UIKit
 import Accelerate
-
 import AVFoundation
 import CoreMedia
 
@@ -44,11 +43,8 @@ class ModelDataHandler {
     
     let batchSize = 1
     let inputChannels = 3
-//    let inputWidth = 224
-//    let inputHeight = 224
-//    128
-        let inputWidth = 112
-        let inputHeight = 112
+    let inputWidth = 112
+    let inputHeight = 112
     
     // MARK: - Private Properties
     
@@ -60,6 +56,7 @@ class ModelDataHandler {
     
     /// Information about the alpha component in RGBA data.
     private let alphaComponent = (baseOffset: 4, moduloRemainder: 3)
+    private var registered = [String : ModelFace]()
     
     // MARK: - Initialization
     
@@ -94,16 +91,73 @@ class ModelDataHandler {
         loadLabels(fileInfo: labelsFileInfo)
     }
     
+    func register(name: String, modelFace: ModelFace) {
+        registered[name] = modelFace
+    }
+    
+    func findNearest(emb: Tensor) {
+        for itemRegistered in registered {
+            let name = itemRegistered.key
+            let knownEmb = itemRegistered.value.getExtra()
+            
+            let newKnownEmb: Tensor = knownEmb!
+            let resultsKnown: [Float] = [Float32](unsafeData: newKnownEmb.data) ?? []
+            let resultsEmb: [Float] = [Float32](unsafeData: emb.data) ?? []
+            
+            var distance: Float = 0.0;
+            for i in 1...resultsEmb.count {
+                let index = i - 1
+                let diff: Float = resultsEmb[index] - resultsKnown[index]
+                let diffCalc = diff * diff
+                distance = distance + diffCalc
+            }
+            print("distance: \(distance)")
+        }
+        
+        //        Pair<String, Float> ret = null;
+        //               for (Map.Entry<String, ModelFace> entry : registered.entrySet()) {
+        //                   final String name = entry.getKey();
+        //                   final float[] knownEmb = ((float[][]) entry.getValue().getExtra())[0];
+        //
+        //                   float distance = 0;
+        //                   for (int i = 0; i < emb.length; i++) {
+        //                       float diff = emb[i] - knownEmb[i];
+        //                       distance += diff * diff;
+        //                   }
+        //                   distance = (float) Math.sqrt(distance);
+        //                   if (ret == null || distance < ret.second) {
+        //                       ret = new Pair<>(name, distance);
+        //                   }
+        //               }
+        //               return ret;
+    }
+    
     func recognize(image: UIImage, storeExtra: Bool) -> [ModelFace] {
-        tensorCamera(image: image)
+        let outputTensor = tensorCamera(image: image)
+        
+        var distance: Float = 0.0
+        let id = "0"
+        var label = "?"
+        
+        if (registered.count > 0)   {
+            let nearest = findNearest(emb: outputTensor!)
+            if (nearest != nil) {
+                //                label = nearest.label
+                //                distance = nearest.distance
+            }
+        }
+        
         var arrayFace = [ModelFace]()
         let regLocation = CGRect(x: 0, y: 0, width: 200, height: 200)
-        let modelFace: ModelFace = ModelFace(id: "String", title: "String", distance: 0.0, location: regLocation)
+        let modelFace: ModelFace = ModelFace(id: id, title: label, distance: distance, location: regLocation)
+        if (storeExtra) {
+            modelFace.setExtra(extra: outputTensor!);
+        }
         arrayFace.append(modelFace)
         return arrayFace
     }
     
-    func tensorCamera(image: UIImage) {
+    func tensorCamera(image: UIImage) -> Tensor? {
         let pixelBuffer = uiImageToPixelBuffer(image: image, size: inputWidth)
         if (pixelBuffer != nil) {
             let interval: TimeInterval
@@ -118,21 +172,25 @@ class ModelDataHandler {
                     isModelQuantized: inputTensor.dataType == .uInt8
                 ) else {
                     print("Failed to convert the image buffer to RGB data.")
-                    return
+                    return nil
                 }
                 // Copy the RGB data to the input `Tensor`.
                 try interpreter.copy(rgbData, toInputAt: 0)
-
+                
                 // Run inference by invoking the `Interpreter`.
                 let startDate = Date()
                 try interpreter.invoke()
                 interval = Date().timeIntervalSince(startDate) * 1000
-
+                
                 // Get the output `Tensor` to process the inference results.
                 outputTensor = try interpreter.output(at: 0)
+                return outputTensor
             } catch let error {
                 print("Failed to invoke the interpreter with error: \(error.localizedDescription)")
+                return nil
             }
+        } else {
+            return nil
         }
     }
     
