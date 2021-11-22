@@ -63,6 +63,7 @@ class CameraViewController: UIViewController {
     @IBOutlet private weak var cameraView: UIView!
     @IBOutlet private weak var imageFace: UIImageView!
     @IBOutlet private weak var imageStorage: UIImageView!
+    @IBOutlet private weak var buttonSwitch: UIButton!
     
     // MARK: - UIViewController
     
@@ -79,6 +80,7 @@ class CameraViewController: UIViewController {
         if (isLoadStorage)   {
             loadImageStorage();
         }
+        buttonSwitch.addTarget(self, action: #selector(actionSwitchCamera), for: .touchDown)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -101,8 +103,9 @@ class CameraViewController: UIViewController {
         presentDetectorsAlertController()
     }
     
-    @IBAction func switchCamera(_ sender: Any) {
+    @objc func actionSwitchCamera(_ sender: UIButton) {
         isUsingFrontCamera = !isUsingFrontCamera
+        isHuman = false
         removeDetectionAnnotations()
         setUpCaptureSessionInput()
     }
@@ -112,6 +115,7 @@ class CameraViewController: UIViewController {
         // mode to get accurate performance metrics.
         let options = FaceDetectorOptions()
         options.performanceMode = .fast
+        options.classificationMode = .all
         let faceDetector = FaceDetector.faceDetector(options: options)
         var faces: [Face]
         do {
@@ -165,13 +169,24 @@ class CameraViewController: UIViewController {
                         let resultUser = modelDataHandler?.recognize(image: imageCrop!, storeExtra: isAddPending)
                         let result: ModelFace = (resultUser![0])
                         let extra = result.getExtra() ?? nil
+                        
                         confidence = result.getDistance()!
                         if (confidence < 1.0)   {
-                            color = UIColor.green
-                            label = "User"
+                            eyeRightProb.append(face.rightEyeOpenProbability)
+                            if let firstBlink = eyeRightProb.first(where: { $0 <= 0.2 }) {
+                                eyeRightProb.removeAll()
+                                isHuman = true
+                            }
+                            if (isHuman)    {
+                                color = UIColor.green
+                                label = "Human"
+                            } else {
+                                color = UIColor.yellow
+                                label = "Not Human"
+                            }
                         }
                         colorFrame = color
-                        let confidenceStr = String(format: "%.2f", confidence)
+                        let confidenceStr = "" // String(format: "%.2f", confidence)
                         labelFrame = label + " \(confidenceStr)"
                         
                         let objFace = ModelFace(id: "0", title: label, distance: confidence, location: faceFrame)
@@ -186,6 +201,9 @@ class CameraViewController: UIViewController {
             }
         }
     }
+    
+    private var eyeRightProb = [Double]()
+    private var isHuman = false
     
     func loadImageStorage() {
         let imageData = Data.init(base64Encoded: getStorageSample(), options: .init(rawValue: 0))
